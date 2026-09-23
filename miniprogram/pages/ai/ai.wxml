@@ -1,0 +1,60 @@
+<view class="container">
+  <view class="header">
+    <view class="title">AI研学助手</view>
+    <view class="subtitle">智能问答 · 非遗知识</view>
+  </view>
+
+  <view class="quick-questions">
+    <view class="quick-title">快速提问</view>
+    <view class="quick-list">
+      <view 
+        class="quick-item" 
+        wx:for="{{quickQuestions}}" 
+        wx:key="index"
+        bindtap="quickQuestion"
+        data-question="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <scroll-view 
+    class="message-list" 
+    scroll-y 
+    scroll-with-animation
+    scroll-top="{{scrollTop}}"
+  >
+    <view 
+      class="message-item {{item.type}}" 
+      wx:for="{{messages}}" 
+      wx:key="item.id"
+    >
+      <view class="avatar">
+        <text wx:if="{{item.type === 'user'}}">👤</text>
+        <text wx:elif="{{item.type === 'ai'}}">🤖</text>
+        <text wx:else>🎓</text>
+      </view>
+      <view class="message-content">
+        <text>{{item.content}}</text>
+      </view>
+    </view>
+    <view class="loading" wx:if="{{isLoading}}">
+      <view class="loading-dot"></view>
+      <view class="loading-dot"></view>
+      <view class="loading-dot"></view>
+    </view>
+  </scroll-view>
+
+  <view class="input-area">
+    <input 
+      class="input-box" 
+      placeholder="输入您的问题..." 
+      value="{{inputValue}}"
+      bindinput="inputChange"
+      bindconfirm="sendMessage"
+      confirm-type="send"
+    />
+    <view class="send-btn" bindtap="sendMessage">发送</view>
+  </view>
+</view>

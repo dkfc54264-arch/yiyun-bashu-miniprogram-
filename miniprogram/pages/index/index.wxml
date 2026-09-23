@@ -1,0 +1,83 @@
+<!-- 首页：主形象图 + 核心产品 + 功能入口 -->
+<view class="page">
+
+  <!-- ═══════════ 主形象 Hero 区 ═══════════ -->
+  <view class="hero" style="padding-top: {{statusBarHeight}}px;">
+    <!-- 墨绿渐变底 -->
+    <view class="hero-fallback"></view>
+
+    <!-- 主形象背后光晕 -->
+    <view class="hero-glow"></view>
+
+    <!-- 顶部用户问候 -->
+    <view class="hero-top">
+      <view class="hero-user">
+        <view class="hero-avatar">{{userInfo.avatar}}</view>
+        <view class="hero-user-text">
+          <view class="hero-hello">{{userInfo.greeting}}</view>
+          <view class="hero-sub">{{userInfo.level}} · {{userInfo.score}} 积分</view>
+        </view>
+      </view>
+      <view class="hero-rank" bindtap="goToRank">🏅 {{userInfo.rank}}</view>
+    </view>
+
+    <!-- 主形象：任务 Q 版角色 -->
+    <view class="hero-figure">
+      <image
+        wx:if="{{!mascotFail}}"
+        class="hero-mascot"
+        src="{{mascot}}"
+        mode="heightFix"
+        binderror="onMascotError"
+      />
+    </view>
+
+    <!-- 主标题 -->
+    <view class="hero-body">
+      <view class="hero-brand">非遗剧本研学</view>
+      <view class="hero-slogan">在故事里，读懂非遗</view>
+      <view class="hero-cta" bindtap="goToScript">开启研学之旅</view>
+    </view>
+  </view>
+
+  <!-- ═══════════ 核心产品区 ═══════════ -->
+  <view class="intro-card">
+    <view class="intro-tag">核心体验</view>
+    <view class="intro-title">沉浸式非遗研学</view>
+    <view class="intro-desc">电子剧本 · 数字观展 · AI 伴学 · 报告沉淀，一条完整研学链路带你从「旁观」走向「亲历」。</view>
+  </view>
+
+  <!-- ═══════════ 功能入口网格 ═══════════ -->
+  <view class="section-head">
+    <view class="section-title">探索功能</view>
+    <view class="section-line"></view>
+  </view>
+  <view class="feature-grid">
+    <view
+      class="feature-item"
+      wx:for="{{features}}"
+      wx:key="id"
+      bindtap="goFeature"
+      data-url="{{item.url}}"
+    >
+      <view class="feature-seal">{{item.glyph}}</view>
+      <view class="feature-title">{{item.title}}</view>
+      <view class="feature-desc">{{item.desc}}</view>
+    </view>
+  </view>
+
+  <!-- ═══════════ 研学进度卡 ═══════════ -->
+  <view class="progress-card" bindtap="goToTask">
+    <view class="progress-info">
+      <view class="progress-title">我的研学进度</view>
+      <view class="progress-sub">已完成 {{progress.done}}/{{progress.totalTask}} 项任务</view>
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{progress.total}}%;"></view>
+      </view>
+    </view>
+    <view class="progress-percent">{{progress.total}}%</view>
+    <view class="progress-arrow">›</view>
+  </view>
+
+  <view class="page-footer">非遗剧本研学 · 让传统在体验中延续</view>
+</view>

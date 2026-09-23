@@ -1,0 +1,108 @@
+<view class="container">
+  <view class="page-title">预约购票</view>
+
+  <!-- ═══ 剧本版本 ═══ -->
+  <view class="form-card">
+    <view class="form-label">选择剧本版本</view>
+    <view class="version-list">
+      <view
+        class="version-card {{selectedVersion === item.id ? 'active' : ''}}"
+        wx:for="{{versions}}"
+        wx:key="id"
+        bindtap="selectVersion"
+        data-id="{{item.id}}"
+      >
+        <view class="version-name">{{item.name}}</view>
+        <view class="version-meta">{{item.duration}}</view>
+        <view class="version-meta">难度 {{item.difficultyText}}</view>
+        <view class="version-price">￥{{item.price}}<text class="price-unit">/人</text></view>
+      </view>
+    </view>
+    <view class="group-note">中小学研学团单（10人以上）139 元/人，含标准化课程＋研学证书，请电话咨询 023-88888888</view>
+  </view>
+
+  <!-- ═══ 场次选择 ═══ -->
+  <view class="form-card">
+    <view class="form-label">选择场次<text class="label-hint">（地点：龚滩古镇 118 号台）</text></view>
+    <view class="time-options" wx:if="{{sessions.length > 0}}">
+      <view
+        class="time-option session-option {{selectedSession === item._id ? 'active' : ''}}"
+        wx:for="{{sessions}}"
+        wx:key="_id"
+        bindtap="selectSession"
+        data-id="{{item._id}}"
+      >
+        <view class="session-time">{{item.date}} {{item.time}}</view>
+        <view class="session-remaining {{item.remaining <= 0 ? 'full' : ''}}">
+          {{item.remaining > 0 ? '余 ' + item.remaining + ' 位' : '已约满'}}
+        </view>
+      </view>
+    </view>
+    <view class="empty-tip" wx:else>请先选择剧本版本，即可查看可约场次</view>
+  </view>
+
+  <!-- ═══ 联系人信息 ═══ -->
+  <view class="form-card">
+    <view class="form-item">
+      <view class="form-label">姓名</view>
+      <input class="form-input" placeholder="请输入姓名" bindinput="inputName" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">手机号</view>
+      <input class="form-input" placeholder="请输入手机号" type="number" maxlength="11" bindinput="inputPhone" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">购票数量</view>
+      <input class="form-input" placeholder="默认1张" type="number" bindinput="inputNum" value="{{num}}" />
+    </view>
+  </view>
+
+  <!-- ═══ 合计 ═══ -->
+  <view class="total-bar" wx:if="{{total > 0}}">
+    <text>合计</text>
+    <text class="total-price">￥{{total}}</text>
+  </view>
+
+  <view class="submit-btn" bindtap="submitBooking">提交预约</view>
+
+  <!-- ═══ 我的门票 ═══ -->
+  <view class="orders-section" wx:if="{{orders.length > 0}}">
+    <view class="section-head">
+      <view class="section-title">我的门票</view>
+      <view class="section-line"></view>
+    </view>
+    <view class="ticket-card {{item.status === 'used' ? 'used' : ''}}" wx:for="{{orders}}" wx:key="_id">
+      <view class="ticket-top">
+        <view class="ticket-version">{{item.versionName}}<text class="ticket-count"> ×{{item.count}}</text></view>
+        <view class="ticket-status s-{{item.status}}">
+          {{item.status === 'pending' ? '待支付' : item.status === 'paid' ? '已支付' : '已核销'}}
+        </view>
+      </view>
+      <view class="ticket-row">{{item.date}} {{item.time}}</view>
+      <view class="ticket-row">地点：龚滩古镇 118 号台 · {{item.name}} {{item.phone}}</view>
+      <view class="ticket-code-wrap">
+        <view class="ticket-code">{{item.checkCode}}</view>
+        <view class="ticket-code-label">入场核销码</view>
+      </view>
+      <view class="ticket-actions" wx:if="{{item.status === 'pending'}}">
+        <view class="ticket-pay-btn" catchtap="continuePay" data-id="{{item._id}}">去支付</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ═══ 模拟支付弹层 ═══ -->
+  <view class="pay-mask" wx:if="{{showPay}}" catchtouchmove="true">
+    <view class="pay-modal">
+      <view class="pay-title">模拟支付</view>
+      <view class="pay-amount">￥{{payAmount}}</view>
+      <view class="pay-desc">{{payDesc}}</view>
+      <view class="pay-note">演示版模拟支付 · 正式版接入微信支付</view>
+      <view class="pay-btns">
+        <view class="pay-btn cancel" bindtap="cancelPay">取消</view>
+        <view class="pay-btn confirm {{paying ? 'disabled' : ''}}" bindtap="confirmPay">确认支付</view>
+      </view>
+    </view>
+  </view>
+</view>

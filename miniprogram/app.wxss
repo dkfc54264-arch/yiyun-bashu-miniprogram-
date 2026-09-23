@@ -1,0 +1,107 @@
+/* ══════════════════════════════════════════════════════════════
+   非遗剧本研学 · 全局设计令牌（墨绿 · 鎏金 · 宣纸）
+   所有页面统一引用以下语义色，禁止散落硬编码色值。
+   ══════════════════════════════════════════════════════════════ */
+
+page {
+  /* 品牌色 */
+  --brand: #1A4735;            /* 墨绿 · 主色 */
+  --brand-dark: #14352A;       /* 深墨绿 · 渐变/按压 */
+  --brand-light: #2A5E46;      /* 浅墨绿 · 高亮/次级 */
+  --gold: #C9A227;             /* 鎏金 · 强调/装饰 */
+  --gold-bright: #D4AF37;      /* 亮金 · 描边/徽章 */
+  --gold-soft: rgba(201, 162, 39, 0.14);
+
+  /* 背景与表面 */
+  --bg: #F5F0E3;               /* 宣纸米白 · 页面底 */
+  --bg-deep: #ECE4D2;          /* 更深宣纸 · 分区底 */
+  --card: #FFFFFF;             /* 卡片面 */
+  --card-warm: #FFFDF6;        /* 暖白卡面 */
+
+  /* 剪纸红（仅用于剪纸艺术纹样与强调） */
+  --red: #B03A2E;
+
+  /* 文字 */
+  --text: #2B2B2B;
+  --text-2: #6B6659;
+  --text-3: #9A948A;
+
+  /* 分隔/描边 */
+  --line: rgba(26, 71, 53, 0.12);
+  --line-strong: rgba(26, 71, 53, 0.22);
+
+  /* 阴影 */
+  --shadow-sm: 0 4rpx 14rpx rgba(20, 53, 42, 0.06);
+  --shadow-md: 0 8rpx 28rpx rgba(20, 53, 42, 0.10);
+
+  background-color: var(--bg);
+  font-size: 28rpx;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+}
+
+/* 容器规范 */
+.container {
+  min-height: 100vh;
+  background-color: var(--bg);
+  box-sizing: border-box;
+}
+
+/* 卡片组件 */
+.card {
+  background-color: var(--card);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: #fff;
+  border-radius: 44rpx;
+  padding: 24rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  box-shadow: 0 6rpx 20rpx rgba(26, 71, 53, 0.22);
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+}
+
+/* 金线描边按钮 / 次按钮 */
+.btn-gold {
+  background: transparent;
+  color: var(--brand);
+  border: 2rpx solid var(--gold);
+  border-radius: 44rpx;
+  padding: 22rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+/* 文本层级 */
+.title-xl { font-size: 44rpx; font-weight: 700; color: var(--text); }
+.title-lg { font-size: 36rpx; font-weight: 600; color: var(--text); }
+.title-md { font-size: 32rpx; font-weight: 600; color: var(--text); }
+
+.text-muted { color: var(--text-3); font-size: 24rpx; }
+.text-center { text-align: center; }
+
+/* 弹性布局 */
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center { display: flex; align-items: center; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+
+/* 间距 */
+.mb-10 { margin-bottom: 10rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.mb-30 { margin-bottom: 30rpx; }
+.mt-20 { margin-top: 20rpx; }

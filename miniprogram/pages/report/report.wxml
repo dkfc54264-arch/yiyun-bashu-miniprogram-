@@ -1,0 +1,253 @@
+<view class="container">
+
+  <!-- ═══════════════ 步骤一：数据概览 ═══════════════ -->
+  <block wx:if="{{step === 'overview'}}">
+    <!-- 头部 -->
+    <view class="page-header">
+      <view class="page-title">📝 研学报告</view>
+      <view class="page-subtitle">生成你的专属非遗研学报告</view>
+    </view>
+
+    <!-- 学习数据概览卡片 -->
+    <view class="overview-card">
+      <view class="overview-header">
+        <text class="overview-title">📊 学习数据概览</text>
+        <text class="overview-date">活动日期：{{overview.date}}</text>
+      </view>
+
+      <!-- 进度环 -->
+      <view class="progress-ring-area">
+        <view class="progress-ring">
+          <view class="ring-inner">
+            <text class="ring-percent">{{overview.totalProgress}}%</text>
+            <text class="ring-label">完成度</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 数据网格 -->
+      <view class="stats-grid">
+        <view class="stat-item">
+          <view class="stat-icon">✅</view>
+          <view class="stat-num">{{overview.tasksDone}}/{{overview.tasksTotal}}</view>
+          <view class="stat-label">完成任务</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-icon">🧩</view>
+          <view class="stat-num">{{overview.clues}}</view>
+          <view class="stat-label">守护线索</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-icon">🏆</view>
+          <view class="stat-num">{{overview.rank}}</view>
+          <view class="stat-label">总排名</view>
+        </view>
+        <view class="stat-item">
+          <view class="stat-icon">⭐</view>
+          <view class="stat-num">{{overview.score}}</view>
+          <view class="stat-label">积分（{{overview.scoreRank}}）</view>
+        </view>
+      </view>
+
+      <!-- 活动信息 -->
+      <view class="info-row">
+        <text class="info-label">研学主题</text>
+        <text class="info-value">{{overview.theme}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">预约场次</text>
+        <text class="info-value">{{overview.bookingName}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">场次时间</text>
+        <text class="info-value">{{overview.bookingTime}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">学员等级</text>
+        <text class="info-value level-text">{{overview.level}}</text>
+      </view>
+
+      <!-- 任务列表 -->
+      <view class="task-mini-list">
+        <text class="task-mini-title">任务完成详情</text>
+        <view class="task-mini-item" wx:for="{{taskDetails}}" wx:key="name">
+          <text class="task-mini-icon">{{item.done ? '✅' : '⬜'}}</text>
+          <text class="task-mini-name {{item.done ? '' : 'undone'}}">{{item.name}}</text>
+        </view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="overview-actions">
+        <view class="btn-secondary" bindtap="goToTask">查看任务详情</view>
+        <view class="btn-secondary" bindtap="goToDigital">查看数字展示</view>
+      </view>
+    </view>
+
+    <!-- 草稿列表 -->
+    <view class="draft-section" wx:if="{{savedDrafts.length > 0}}">
+      <view class="draft-title">📂 历史草稿</view>
+      <view class="draft-item" wx:for="{{savedDrafts}}" wx:key="id">
+        <view class="draft-info" bindtap="loadDraft" data-id="{{item.id}}">
+          <text class="draft-date">{{item.date}}</text>
+          <text class="draft-preview">{{item.preview}}</text>
+        </view>
+        <view class="draft-delete" bindtap="deleteDraft" data-id="{{item.id}}">✕</view>
+      </view>
+    </view>
+
+    <!-- 开始撰写按钮 -->
+    <view class="start-btn-wrap">
+      <view class="btn-primary" bindtap="goToWrite">
+        ✍️ 开始撰写报告
+      </view>
+    </view>
+  </block>
+
+
+  <!-- ═══════════════ 步骤二：撰写报告 ═══════════════ -->
+  <block wx:if="{{step === 'write'}}">
+    <view class="write-header">
+      <view class="write-title">✍️ 撰写报告</view>
+      <view class="write-subtitle">完成以下板块，生成你的研学报告</view>
+      <view class="write-progress">
+        <text>已填写 {{filledCount}}/{{sections.length}} 个板块</text>
+        <view class="write-progress-bar">
+          <view class="write-progress-fill" style="width: {{filledCount/sections.length*100+'%'}}"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 板块选择标签 -->
+    <scroll-view class="section-tabs" scroll-x>
+      <view
+        class="section-tab {{activeSection === index ? 'active' : ''}} {{sections[index].content.length >= 10 ? 'filled' : ''}}"
+        wx:for="{{sections}}"
+        wx:key="key"
+        bindtap="switchSection"
+        data-index="{{index}}"
+      >
+        <text class="section-tab-icon">{{item.icon}}</text>
+        <text class="section-tab-title">{{item.title}}</text>
+      </view>
+    </scroll-view>
+
+    <!-- 当前板块编辑区 -->
+    <view class="editor-card">
+      <view class="editor-header">
+        <text class="editor-icon">{{sections[activeSection].icon}}</text>
+        <text class="editor-title">{{sections[activeSection].title}}</text>
+      </view>
+      <view class="editor-hint">
+        💡 {{sections[activeSection].hint}}
+      </view>
+      <textarea
+        class="editor-textarea"
+        placeholder="{{sections[activeSection].placeholder}}"
+        value="{{sections[activeSection].content}}"
+        bindinput="onContentInput"
+        data-index="{{activeSection}}"
+        auto-height
+        maxlength="500"
+        show-confirm-bar="{{false}}"
+      />
+      <view class="editor-footer">
+        <text class="editor-count">{{sections[activeSection].content.length}}/500</text>
+      </view>
+    </view>
+
+    <!-- 板块切换按钮 -->
+    <view class="editor-nav">
+      <view class="nav-btn {{activeSection === 0 ? 'disabled' : ''}}" bindtap="switchSection" data-index="{{activeSection - 1}}">
+        ← 上一板块
+      </view>
+      <view class="nav-btn {{activeSection === sections.length - 1 ? 'disabled' : ''}}" bindtap="switchSection" data-index="{{activeSection + 1}}">
+        下一板块 →
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="write-actions">
+      <view class="btn-secondary" bindtap="autoFill">🪄 一键填充</view>
+      <view class="btn-secondary" bindtap="clearAll">🗑 清空内容</view>
+      <view class="btn-secondary" bindtap="saveDraft">💾 保存草稿</view>
+    </view>
+    <view class="generate-btn-wrap">
+      <view class="btn-primary" bindtap="generateReport">
+        📄 生成报告（{{filledCount}}/{{sections.length}}）
+      </view>
+    </view>
+  </block>
+
+
+  <!-- ═══════════════ 步骤三：预览报告 ═══════════════ -->
+  <block wx:if="{{step === 'preview'}}">
+    <view class="preview-header">
+      <view class="preview-title">📄 报告预览</view>
+      <view class="preview-date">生成于 {{overview.date}}</view>
+    </view>
+
+    <!-- 纸质报告样式 -->
+    <view class="paper">
+      <!-- 抬头 -->
+      <view class="paper-head">
+        <view class="paper-hr"></view>
+        <text class="paper-main-title">酉阳非遗剧本研学报告</text>
+        <view class="paper-hr"></view>
+      </view>
+
+      <!-- 基本信息 -->
+      <view class="paper-section">
+        <text class="paper-section-title">📌 基本信息</text>
+        <view class="paper-table">
+          <view class="paper-row">
+            <text class="paper-label">研学主题</text>
+            <text class="paper-value">{{overview.theme}}</text>
+          </view>
+          <view class="paper-row">
+            <text class="paper-label">活动日期</text>
+            <text class="paper-value">{{overview.date}}</text>
+          </view>
+          <view class="paper-row">
+            <text class="paper-label">预约场次</text>
+            <text class="paper-value">{{overview.bookingName}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 学习数据 -->
+      <view class="paper-section">
+        <text class="paper-section-title">📊 学习数据</text>
+        <view class="paper-stats-row">
+          <view class="paper-stat">完成进度 {{overview.totalProgress}}%</view>
+          <view class="paper-stat">完成任务 {{overview.tasksDone}}/{{overview.tasksTotal}}</view>
+          <view class="paper-stat">守护线索 {{overview.clues}} 条</view>
+          <view class="paper-stat">总排名 第{{overview.rank}}名</view>
+          <view class="paper-stat">积分 {{overview.score}} 分 · {{overview.scoreRank}}</view>
+          <view class="paper-stat">等级 {{overview.level}}</view>
+        </view>
+      </view>
+
+      <!-- 报告正文（逐节渲染） -->
+      <view class="paper-section" wx:for="{{sections}}" wx:key="key" wx:if="{{item.content.trim()}}">
+        <text class="paper-section-title">{{item.icon}} {{item.title}}</text>
+        <text class="paper-body">{{item.content.trim()}}</text>
+      </view>
+
+      <!-- 页脚 -->
+      <view class="paper-footer">
+        <view class="paper-hr"></view>
+        <text>报告由「艺韵巴蜀」研学基地生成</text>
+        <text>日期：{{overview.date}}</text>
+      </view>
+    </view>
+
+    <!-- 导出操作 -->
+    <view class="export-actions">
+      <view class="btn-secondary" bindtap="backToWrite">✏️ 继续编辑</view>
+      <view class="btn-secondary" bindtap="copyReport">📋 复制全文</view>
+      <view class="btn-secondary" bindtap="saveDraft">💾 保存草稿</view>
+      <button class="btn-secondary share-btn" open-type="share">💬 分享报告</button>
+    </view>
+  </block>
+
+</view>

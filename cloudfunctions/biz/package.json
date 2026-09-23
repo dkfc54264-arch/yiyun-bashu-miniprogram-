@@ -1,0 +1,9 @@
+{
+  "name": "biz",
+  "version": "1.0.0",
+  "description": "统一业务云函数：场次/订单/任务/报告/排行/商城",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

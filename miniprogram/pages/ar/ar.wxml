@@ -1,0 +1,252 @@
+<view class="container">
+  <!-- Header -->
+  <view class="header">
+    <view class="title">数字展示</view>
+    <view class="subtitle">IP 人设 · 剪纸 3D · 非遗科普视频</view>
+  </view>
+
+  <!-- ═══ 三段切换 ═══ -->
+  <view class="show-tabs">
+    <view class="show-tab {{activeTab === 'ip' ? 'active' : ''}}" bindtap="switchTab" data-tab="ip">
+      <view class="st-icon">🎭</view>
+      <view class="st-text">IP 人设</view>
+    </view>
+    <view class="show-tab {{activeTab === 'paper' ? 'active' : ''}}" bindtap="switchTab" data-tab="paper">
+      <view class="st-icon">✂️</view>
+      <view class="st-text">剪纸 3D</view>
+    </view>
+    <view class="show-tab {{activeTab === 'video' ? 'active' : ''}}" bindtap="switchTab" data-tab="video">
+      <view class="st-icon">🎬</view>
+      <view class="st-text">科普视频</view>
+    </view>
+  </view>
+
+  <!-- ═══════════════ 一、IP 人设 3D 展示 ═══════════════ -->
+  <block wx:if="{{activeTab === 'ip'}}">
+    <view class="viewer-section">
+      <view class="viewer-title">IP 人设 3D 展示</view>
+      <view class="viewer-hint">↔ 手指拖动旋转查看</view>
+
+      <view
+        class="viewer-stage"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+      >
+        <view class="perspective-box">
+          <view
+            class="rotate-object {{momentum ? 'momentum' : ''}}"
+            style="transform: rotateY({{rotateY}}deg) rotateX({{rotateX}}deg);"
+          >
+            <!-- 正面：人设形象 -->
+            <view class="model-face front">
+              <view class="ip-card" style="background: {{ipCharacters[currentIp].gradient}};">
+                <view class="ip-ring"></view>
+                <view class="ip-glyph">{{ipCharacters[currentIp].glyph}}</view>
+                <view class="ip-name">{{ipCharacters[currentIp].name}}</view>
+                <view class="ip-role">{{ipCharacters[currentIp].role}}</view>
+              </view>
+              <view class="model-label">{{ipCharacters[currentIp].slogan}}</view>
+            </view>
+
+            <!-- 背面：人设介绍 -->
+            <view class="model-face back">
+              <view class="ip-card ip-card-back" style="background: {{ipCharacters[currentIp].gradient}};">
+                <view class="ip-back-name">{{ipCharacters[currentIp].name}}</view>
+                <view class="ip-back-text">{{ipCharacters[currentIp].desc}}</view>
+              </view>
+              <view class="model-label">{{ipCharacters[currentIp].name}} · 背面</view>
+            </view>
+          </view>
+        </view>
+        <view class="ground-shadow"></view>
+        <view class="model-glow ip-glow"></view>
+      </view>
+
+      <view class="viewer-controls">
+        <view class="control-btn {{isAutoRotate ? 'active' : ''}}" bindtap="toggleAutoRotate">
+          <text class="control-icon">{{isAutoRotate ? '⏸' : '▶'}}</text>
+          <text>{{isAutoRotate ? '暂停旋转' : '自动旋转'}}</text>
+        </view>
+        <view class="control-btn" bindtap="resetView">
+          <text class="control-icon">↺</text>
+          <text>重置视角</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- IP 选择 -->
+    <view class="ip-selector">
+      <view class="section-title">选择 IP 形象</view>
+      <view class="ip-tabs">
+        <view
+          class="ip-tab {{currentIp === index ? 'active' : ''}}"
+          wx:for="{{ipCharacters}}"
+          wx:key="id"
+          bindtap="selectIp"
+          data-index="{{index}}"
+        >
+          <view class="ip-mini" style="background: {{item.gradient}};">{{item.glyph}}</view>
+          <view class="model-tab-info">
+            <view class="model-tab-name">{{item.name}}</view>
+            <view class="model-tab-type">{{item.role}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══════════════ 二、剪纸 3D 展示 ═══════════════ -->
+  <block wx:if="{{activeTab === 'paper'}}">
+    <view class="viewer-section">
+      <view class="viewer-title">3D 剪纸模型展示</view>
+      <view class="viewer-hint">↔ 手指拖动旋转查看</view>
+
+      <view
+        class="viewer-stage"
+        bindtouchstart="onTouchStart"
+        bindtouchmove="onTouchMove"
+        bindtouchend="onTouchEnd"
+      >
+        <view class="perspective-box">
+          <view
+            class="rotate-object {{momentum ? 'momentum' : ''}}"
+            style="transform: rotateY({{rotateY}}deg) rotateX({{rotateX}}deg);"
+          >
+            <view class="model-face front">
+              <view class="papercut-artwork papercut-{{currentModel}}">
+                <view class="papercut-inner">
+                  <view class="papercut-center"></view>
+                </view>
+                <view class="papercut-border"></view>
+              </view>
+              <view class="model-label">{{models[currentModel].name}}</view>
+            </view>
+            <view class="model-face back">
+              <view class="papercut-artwork papercut-{{currentModel}}">
+                <view class="papercut-inner">
+                  <view class="papercut-center"></view>
+                </view>
+                <view class="papercut-border"></view>
+              </view>
+              <view class="model-label">{{models[currentModel].name}} · 背面</view>
+            </view>
+          </view>
+        </view>
+        <view class="ground-shadow"></view>
+        <view class="model-glow"></view>
+      </view>
+
+      <view class="viewer-controls">
+        <view class="control-btn {{isAutoRotate ? 'active' : ''}}" bindtap="toggleAutoRotate">
+          <text class="control-icon">{{isAutoRotate ? '⏸' : '▶'}}</text>
+          <text>{{isAutoRotate ? '暂停旋转' : '自动旋转'}}</text>
+        </view>
+        <view class="control-btn" bindtap="resetView">
+          <text class="control-icon">↺</text>
+          <text>重置视角</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="model-selector">
+      <view class="section-title">选择模型</view>
+      <view class="model-tabs">
+        <view
+          class="model-tab {{currentModel === index ? 'active' : ''}}"
+          wx:for="{{models}}"
+          wx:key="id"
+          bindtap="selectModel"
+          data-index="{{index}}"
+        >
+          <view class="papercut-mini papercut-{{index}}"></view>
+          <view class="model-tab-info">
+            <view class="model-tab-name">{{item.name}}</view>
+            <view class="model-tab-type">{{item.type}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="exhibit-section">
+      <view class="section-title">展品信息</view>
+      <view class="exhibit-tabs">
+        <view
+          class="exhibit-tab {{exhibitInfo.id === exhibit.id ? 'active' : ''}}"
+          wx:for="{{exhibits}}"
+          wx:key="id"
+          bindtap="selectExhibit"
+          data-index="{{index}}"
+        >
+          {{exhibit.name}}
+        </view>
+      </view>
+      <view class="exhibit-card" wx:if="{{exhibitInfo}}">
+        <view class="exhibit-header">
+          <view class="exhibit-name">{{exhibitInfo.name}}</view>
+          <view class="exhibit-category">{{exhibitInfo.category}}</view>
+        </view>
+        <view class="exhibit-content">
+          <view class="content-item">
+            <view class="content-title">简介</view>
+            <view class="content-text">{{exhibitInfo.description}}</view>
+          </view>
+          <view class="content-item">
+            <view class="content-title">历史渊源</view>
+            <view class="content-text">{{exhibitInfo.history}}</view>
+          </view>
+          <view class="content-item">
+            <view class="content-title">技艺特点</view>
+            <view class="content-text">{{exhibitInfo.technique}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══════════════ 三、非遗科普视频 ═══════════════ -->
+  <block wx:if="{{activeTab === 'video'}}">
+    <view class="video-section">
+      <view class="video-title">非遗科普视频讲解</view>
+      <view class="viewer-hint">视频可全屏播放，正式演示前替换为基地实拍</view>
+
+      <video
+        class="video-player"
+        src="{{videos[currentVideo].src}}"
+        title="{{videos[currentVideo].title}}"
+        poster="{{videos[currentVideo].poster}}"
+        controls
+        show-center-play-btn
+        binderror="onVideoError"
+        object-fit="contain"
+      ></video>
+
+      <view class="video-now">
+        <view class="vn-title">{{videos[currentVideo].title}}</view>
+        <view class="vn-meta">
+          <text class="vn-tag">{{videos[currentVideo].tag}}</text>
+          <text class="vn-duration">{{videos[currentVideo].duration}}</text>
+        </view>
+        <view class="vn-desc">{{videos[currentVideo].desc}}</view>
+      </view>
+    </view>
+
+    <view class="video-list">
+      <view class="section-title">更多科普视频</view>
+      <view
+        class="video-item {{currentVideo === index ? 'active' : ''}}"
+        wx:for="{{videos}}"
+        wx:key="id"
+        bindtap="selectVideo"
+        data-index="{{index}}"
+      >
+        <view class="vi-icon">▶</view>
+        <view class="vi-info">
+          <view class="vi-title">{{item.title}}</view>
+          <view class="vi-meta">{{item.tag}} · {{item.duration}}</view>
+        </view>
+        <view class="vi-playing" wx:if="{{currentVideo === index}}">播放中</view>
+      </view>
+    </view>
+  </block>
+</view>

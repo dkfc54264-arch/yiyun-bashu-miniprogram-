@@ -1,0 +1,8 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "预约购票",
+  "enablePullDownRefresh": false,
+  "pageOrientation": "portrait",
+  "backgroundColor": "#F5F0E3"
+  
+}

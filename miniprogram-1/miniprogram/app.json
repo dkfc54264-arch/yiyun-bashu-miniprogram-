@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/example/index",
+    "pages/index/首页",
+    "pages/booking",
+    "pages/booking/预约购票",
+    "pages/script/电子剧本",
+    "pages/task/任务进度",
+    "pages/ar/AR入口",
+    "pages/ai/AI交互",
+    "pages/ranking/积分排行",
+    "pages/report/研学报告"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

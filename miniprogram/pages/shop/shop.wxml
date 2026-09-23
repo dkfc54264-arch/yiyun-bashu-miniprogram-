@@ -1,0 +1,53 @@
+<view class="container">
+  <!-- Header -->
+  <view class="header">
+    <view class="title">文创商城</view>
+    <view class="subtitle">积分兑换 · 酉阳非遗好物</view>
+  </view>
+
+  <!-- 我的积分条 -->
+  <view class="score-bar">
+    <view class="score-left">
+      <view class="score-num">{{score}}</view>
+      <view class="score-label">我的积分</view>
+    </view>
+    <view class="score-tip" bindtap="goTask">去答题赚积分 ›</view>
+  </view>
+
+  <!-- 演示提示 -->
+  <view class="demo-tip" wx:if="{{isDemo}}">演示模式：导入 products 种子数据后可真实兑换</view>
+
+  <!-- 商品列表 -->
+  <view class="product-list">
+    <view class="product-card" wx:for="{{products}}" wx:key="_id">
+      <view class="p-icon">{{item.glyph}}</view>
+      <view class="p-info">
+        <view class="p-name">
+          <text>{{item.name}}</text>
+          <text class="p-tag">{{item.tag}}</text>
+        </view>
+        <view class="p-desc">{{item.desc}}</view>
+        <view class="p-bottom">
+          <view class="p-points">
+            <text class="p-points-num">{{item.points}}</text>
+            <text class="p-points-unit">积分</text>
+            <text class="p-price">￥{{item.price}}</text>
+          </view>
+          <view
+            class="p-exchange {{score >= item.points && item.stock > 0 ? '' : 'disabled'}} {{exchangingId === item._id ? 'busy' : ''}}"
+            bindtap="exchange"
+            data-id="{{item._id}}"
+          >
+            {{exchangingId === item._id ? '兑换中' : item.stock > 0 ? '兑换' : '已售罄'}}
+          </view>
+        </view>
+        <view class="p-stock" wx:if="{{item.stock > 0 && item.stock <= 5}}">仅剩 {{item.stock}} 件</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="shop-footer">
+    <text>— 积分通过关卡答题、报告提交、分享等方式获得 —</text>
+  </view>
+</view>

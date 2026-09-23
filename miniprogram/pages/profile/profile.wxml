@@ -1,0 +1,129 @@
+<view class="container">
+
+  <!-- ═══ 用户信息卡 ═══ -->
+  <view class="user-card">
+    <view class="u-left">
+      <view class="u-avatar-wrap" style="border-color: {{curLevel.color}};">
+        <image wx:if="{{userInfo.avatar}}" src="{{userInfo.avatar}}" class="u-avatar-img" mode="aspectFill" />
+        <text wx:else class="u-avatar-text">旅</text>
+      </view>
+      <view class="u-meta">
+        <view class="u-name">{{userInfo.nickname || '研学旅人'}}</view>
+        <view class="u-level" style="color: {{curLevel.color}};">{{curLevel.glyph}} {{curLevel.name}}</view>
+      </view>
+    </view>
+    <view class="u-score-area">
+      <view class="u-score">{{userInfo.score || 0}}</view>
+      <view class="u-score-label">积分</view>
+    </view>
+  </view>
+
+  <!-- ═══ 五级守护人会员进度 ═══ -->
+  <view class="member-card">
+    <view class="member-head">
+      <text class="member-title">🏅 非遗守护人之路</text>
+      <text class="member-next" wx:if="{{nextLevel}}">再获 {{remain}} 积分升级{{nextLevel.name}}</text>
+      <text class="member-next" wx:else>已达成最高等级</text>
+    </view>
+
+    <!-- 进度条 -->
+    <view class="member-progress">
+      <view class="member-progress-fill" style="width: {{levelPct}}%;"></view>
+    </view>
+
+    <!-- 五级列表 -->
+    <view class="level-list">
+      <view
+        class="level-item {{item.level === curLevel.level ? 'active' : ''}} {{item.level < curLevel.level ? 'passed' : ''}}"
+        wx:for="{{levels}}"
+        wx:key="level"
+      >
+        <view class="level-glyph">{{item.glyph}}</view>
+        <view class="level-name">{{item.name}}</view>
+        <view class="level-min">{{item.min}}分</view>
+      </view>
+    </view>
+
+    <!-- 当前等级权益 -->
+    <view class="member-right">
+      <text class="member-right-label">当前权益</text>
+      <text class="member-right-text">{{curLevel.right}}</text>
+    </view>
+  </view>
+
+  <!-- ═══ 功能入口 ═══ -->
+  <view class="menu-card">
+    <view class="menu-item" bindtap="goBooking">
+      <text class="menu-icon">🎫</text>
+      <text class="menu-text">预约购票</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goTask">
+      <text class="menu-icon">🗺️</text>
+      <text class="menu-text">关卡任务</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goAr">
+      <text class="menu-icon">🎭</text>
+      <text class="menu-text">数字展示</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goRank">
+      <text class="menu-icon">🏆</text>
+      <text class="menu-text">积分排行</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goReport">
+      <text class="menu-icon">📝</text>
+      <text class="menu-text">研学报告</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goShop">
+      <text class="menu-icon">🛍️</text>
+      <text class="menu-text">文创商城</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- ═══ 我的门票 ═══ -->
+  <view class="ticket-section">
+    <view class="ticket-head">
+      <text class="section-title">🎫 我的门票</text>
+      <text class="ticket-more" bindtap="goBooking">全部 ›</text>
+    </view>
+    <view class="ticket-empty" wx:if="{{orders.length === 0}}">
+      <text>暂无门票，去预约一场非遗研学吧</text>
+    </view>
+    <view class="ticket-card" wx:for="{{orders}}" wx:key="_id">
+      <view class="tk-left">
+        <view class="tk-name">{{item.versionName}}研学专场</view>
+        <view class="tk-time">{{item.date}} {{item.time}}</view>
+      </view>
+      <view class="tk-right">
+        <view class="tk-code">{{item.checkCode}}</view>
+        <view class="tk-code-label">核销码</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ═══ 守护人证书 ═══ -->
+  <view class="cert-entry" bindtap="openCert">
+    <view class="cert-left">
+      <view class="cert-title">📜 守护人证书</view>
+      <view class="cert-desc">生成你的专属研学证书，保存分享</view>
+    </view>
+    <view class="cert-btn">立即生成</view>
+  </view>
+
+  <!-- ═══ 证书弹层 ═══ -->
+  <view class="cert-mask" wx:if="{{certVisible}}" bindtap="closeCert">
+    <view class="cert-modal" catchtap="noop">
+      <canvas type="2d" id="certCanvas" class="cert-canvas"></canvas>
+      <view class="cert-actions">
+        <view class="cert-save" catchtap="saveCert">保存到相册</view>
+        <view class="cert-close" catchtap="closeCert">关闭</view>
+      </view>
+    </view>
+  </view>
+
+</view>

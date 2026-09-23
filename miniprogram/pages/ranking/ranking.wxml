@@ -1,0 +1,122 @@
+<view class="container">
+  <!-- 页面头部 -->
+  <view class="page-header">
+    <view class="page-title">🏆 积分排行</view>
+    <view class="page-subtitle">共 {{rankList.length}} 位学员参与排名</view>
+  </view>
+
+  <!-- 我的排名卡片 -->
+  <view class="my-rank-card">
+    <view class="my-rank-header">
+      <text class="my-rank-label">我的排名</text>
+      <text class="my-rank-refresh">实时更新</text>
+    </view>
+    <view class="my-rank-body">
+      <view class="my-rank-num">
+        <text class="my-rank-number">{{myInfo.rank}}</text>
+        <text class="my-rank-suffix">/{{rankList.length}}</text>
+      </view>
+      <view class="my-avatar" style="background: {{myInfo.avatarBg || '#1A4735'}}">
+        <text class="my-avatar-text">{{myInfo.avatar}}</text>
+      </view>
+      <view class="my-info">
+        <view class="my-name">我</view>
+        <view class="my-level" style="color: {{myInfo.levelColor}}">{{myInfo.level}}</view>
+      </view>
+      <view class="my-score-area">
+        <view class="my-score">{{myInfo.score}}</view>
+        <view class="my-score-label">积分</view>
+      </view>
+      <view class="my-change up">
+        <text>▲ {{myInfo.change}}</text>
+      </view>
+    </view>
+    <view class="my-rank-tip">
+      <text>再获 <text class="highlight">{{rankList[myInfo.rank - 2] ? rankList[myInfo.rank - 2].score - myInfo.score : '-'}}</text> 积分即可超越上一名</text>
+    </view>
+  </view>
+
+  <!-- 排行榜标题 -->
+  <view class="list-header">
+    <view class="list-title">全部排名</view>
+    <view class="list-legend">
+      <view class="legend-item">
+        <view class="legend-dot up"></view>
+        <text>名次上升</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot down"></view>
+        <text>名次下降</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Top 3 领奖台 -->
+  <view class="podium">
+    <view class="podium-item" wx:for="{{rankList}}" wx:key="id" wx:if="{{item.rank <= 3}}">
+      <view class="podium-medal">
+        <text class="medal-icon">{{item.rank === 1 ? '🥇' : item.rank === 2 ? '🥈' : '🥉'}}</text>
+      </view>
+      <view class="podium-avatar" style="background: {{item.avatarBg}}">
+        <text class="podium-avatar-text">{{item.avatar}}</text>
+      </view>
+      <view class="podium-name">{{item.name}}</view>
+      <view class="podium-level" style="color: {{item.levelColor}}">{{item.level}}</view>
+      <view class="podium-score">{{item.score}} 分</view>
+      <view class="podium-change {{item.change > 0 ? 'up' : item.change < 0 ? 'down' : ''}}">
+        <text wx:if="{{item.change > 0}}">▲ {{item.change}}</text>
+        <text wx:elif="{{item.change < 0}}">▼ {{-item.change}}</text>
+        <text wx:else>-</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 排名列表 -->
+  <view class="ranking-list">
+    <view
+      class="rank-item {{item.isMe ? 'is-me' : ''}} {{item.rank <= 3 ? 'top-bg' : ''}}"
+      wx:for="{{rankList}}"
+      wx:key="id"
+    >
+      <!-- 排名序号 -->
+      <view class="rank-num {{item.rank <= 3 ? 'top-three' : ''}}">
+        <text wx:if="{{item.rank === 1}}">🥇</text>
+        <text wx:elif="{{item.rank === 2}}">🥈</text>
+        <text wx:elif="{{item.rank === 3}}">🥉</text>
+        <text wx:else>{{item.rank}}</text>
+      </view>
+
+      <!-- 头像 -->
+      <view class="user-avatar {{item.isMe ? 'my-avatar-ring' : ''}}" style="background: {{item.avatarBg}}">
+        <text class="avatar-text {{item.rank <= 3 ? 'avatar-top' : ''}}">{{item.avatar}}</text>
+      </view>
+
+      <!-- 用户信息 -->
+      <view class="user-info">
+        <view class="user-name">
+          {{item.name}}
+          <text wx:if="{{item.isMe}}" class="me-tag">我</text>
+        </view>
+        <view class="user-level" style="color: {{item.levelColor}}">{{item.level}}</view>
+      </view>
+
+      <!-- 分数 -->
+      <view class="user-score-area">
+        <view class="user-score">{{item.score}}</view>
+        <view class="user-score-unit">分</view>
+      </view>
+
+      <!-- 排名变化 -->
+      <view class="rank-change {{item.change > 0 ? 'up' : item.change < 0 ? 'down' : 'zero'}}">
+        <text wx:if="{{item.change > 0}}">▲ {{item.change}}</text>
+        <text wx:elif="{{item.change < 0}}">▼ {{-item.change}}</text>
+        <text wx:else class="zero-mark">━</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提示 -->
+  <view class="list-footer">
+    <text>— 积分通过关卡答题、报告提交、分享等方式获得 —</text>
+  </view>
+</view>
