@@ -86,6 +86,6 @@ Page({
   },
 
   goTask() {
-    wx.navigateTo({ url: '/pages/task/task' });
+    wx.switchTab({ url: '/pages/study/study' });
   }
 });

@@ -2,12 +2,12 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #F5F0E3;
+  background-color: #F6F0E2;
 }
 
 .header {
-  padding: 60rpx 32rpx 40rpx;
-  background: linear-gradient(135deg, #1A4735 0%, #14352A 100%);
+  padding: 44rpx 32rpx;
+  background: linear-gradient(135deg, #1F3830 0%, #14241F 100%);
   text-align: center;
 }
 
@@ -15,12 +15,6 @@
   font-size: 40rpx;
   font-weight: 600;
   color: #fff;
-  margin-bottom: 8rpx;
-}
-
-.subtitle {
-  font-size: 26rpx;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .quick-questions {
@@ -43,15 +37,15 @@
 
 .quick-item {
   padding: 16rpx 24rpx;
-  background-color: rgba(26, 71, 53, 0.06);
-  color: #1A4735;
+  background-color: rgba(31, 56, 48, 0.06);
+  color: #1F3830;
   font-size: 26rpx;
   border-radius: 24rpx;
-  border: 1rpx solid rgba(26, 71, 53, 0.15);
+  border: 1rpx solid rgba(31, 56, 48, 0.15);
 }
 
 .quick-item:active {
-  background-color: rgba(26, 71, 53, 0.10);
+  background-color: rgba(31, 56, 48, 0.10);
 }
 
 .message-list {
@@ -102,8 +96,8 @@
 }
 
 .message-item.system .message-content {
-  background-color: rgba(26, 71, 53, 0.10);
-  color: #1A4735;
+  background-color: rgba(31, 56, 48, 0.10);
+  color: #1F3830;
 }
 
 .message-item.ai .message-content {
@@ -114,7 +108,7 @@
 }
 
 .message-item.user .message-content {
-  background: linear-gradient(135deg, #1A4735 0%, #14352A 100%);
+  background: linear-gradient(135deg, #1F3830 0%, #14241F 100%);
   color: #fff;
   border-radius: 24rpx 24rpx 8rpx 24rpx;
 }
@@ -166,7 +160,7 @@
   flex: 1;
   height: 80rpx;
   padding: 0 28rpx;
-  background-color: #F5F0E3;
+  background-color: #F6F0E2;
   border-radius: 40rpx;
   font-size: 28rpx;
 }
@@ -176,7 +170,7 @@
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
-  background: linear-gradient(135deg, #1A4735 0%, #14352A 100%);
+  background: linear-gradient(135deg, #1F3830 0%, #14241F 100%);
   color: #fff;
   border-radius: 40rpx;
   margin-left: 20rpx;

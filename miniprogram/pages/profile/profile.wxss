@@ -2,7 +2,7 @@
 .container {
   min-height: 100vh;
   background-color: var(--bg);
-  padding: 30rpx 24rpx 60rpx;
+  padding: 30rpx 24rpx calc(170rpx + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 
@@ -345,7 +345,7 @@
 .cert-mask {
   position: fixed;
   inset: 0;
-  background: rgba(20, 53, 42, 0.6);
+  background: rgba(20, 36, 31, 0.6);
   z-index: 999;
   display: flex;
   align-items: center;

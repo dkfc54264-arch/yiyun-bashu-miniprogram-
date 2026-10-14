@@ -44,7 +44,7 @@ Page({
       id: 'me',
       name: '我',
       avatar: '我',
-      avatarBg: '#1A4735',
+      avatarBg: '#1F3830',
       score: 0,
       level: '普通会员',
       levelColor: '#b2bec3',
@@ -111,7 +111,7 @@ Page({
       id: 'me',
       name: u.nickname || '我',
       avatar: '我',
-      avatarBg: '#1A4735',
+      avatarBg: '#1F3830',
       score: u.score || 0,
       level,
       levelColor: LEVEL_COLORS[level] || '#b2bec3',
@@ -132,7 +132,7 @@ Page({
         ...me,
         name: '我',
         avatar: '我',
-        avatarBg: '#1A4735',
+        avatarBg: '#1F3830',
         // 演示合并模式下用列表内排名；真实模式用云函数全站排名
         rank: serverMyRank || me.rank
       };

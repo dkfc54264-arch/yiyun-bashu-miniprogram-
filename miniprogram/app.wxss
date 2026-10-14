@@ -1,38 +1,43 @@
 /* ══════════════════════════════════════════════════════════════
-   非遗剧本研学 · 全局设计令牌（墨绿 · 鎏金 · 宣纸）
-   所有页面统一引用以下语义色，禁止散落硬编码色值。
+   艺韵巴蜀 · 全局设计令牌
+   风格：黛山朱砂 · 新中式 —— 黛青为骨，朱砂点印，宣纸为底
+   原则：克制留白，所有页面统一引用语义色，禁止散落硬编码
    ══════════════════════════════════════════════════════════════ */
 
 page {
-  /* 品牌色 */
-  --brand: #1A4735;            /* 墨绿 · 主色 */
-  --brand-dark: #14352A;       /* 深墨绿 · 渐变/按压 */
-  --brand-light: #2A5E46;      /* 浅墨绿 · 高亮/次级 */
-  --gold: #C9A227;             /* 鎏金 · 强调/装饰 */
-  --gold-bright: #D4AF37;      /* 亮金 · 描边/徽章 */
-  --gold-soft: rgba(201, 162, 39, 0.14);
+  /* 黛青（主色族，用于标题/深色块/主要控件） */
+  --brand: #1F3830;            /* 黛色 · 主色 */
+  --brand-dark: #14241F;       /* 深黛 · 深色块/按压 */
+  --brand-light: #3A5A4E;      /* 浅黛 · 高亮次级 */
 
-  /* 背景与表面 */
-  --bg: #F5F0E3;               /* 宣纸米白 · 页面底 */
-  --bg-deep: #ECE4D2;          /* 更深宣纸 · 分区底 */
-  --card: #FFFFFF;             /* 卡片面 */
-  --card-warm: #FFFDF6;        /* 暖白卡面 */
+  /* 朱砂（强调色，小面积点睛：印章/选中态/关键行动） */
+  --cinnabar: #A63A2E;         /* 朱砂 · 主强调 */
+  --cinnabar-bright: #BE4E3E;  /* 亮朱砂 */
+  --cinnabar-soft: rgba(166, 58, 46, 0.08);
 
-  /* 剪纸红（仅用于剪纸艺术纹样与强调） */
-  --red: #B03A2E;
+  /* 鎏金（极小面积：细边线/徽章，克制使用） */
+  --gold: #B08D3E;
+  --gold-bright: #C6A65F;
+  --gold-soft: rgba(176, 141, 62, 0.12);
+
+  /* 宣纸（背景与表面） */
+  --bg: #F6F0E2;               /* 宣纸暖白 · 页面底 */
+  --bg-deep: #ECE3D0;          /* 深宣纸 · 分区底 */
+  --card: #FFFDF7;             /* 卡片面 */
+  --card-warm: #FBF6EA;        /* 暖白卡面 */
 
   /* 文字 */
-  --text: #2B2B2B;
-  --text-2: #6B6659;
-  --text-3: #9A948A;
+  --text: #262A27;
+  --text-2: #5F655C;
+  --text-3: #96978C;
 
   /* 分隔/描边 */
-  --line: rgba(26, 71, 53, 0.12);
-  --line-strong: rgba(26, 71, 53, 0.22);
+  --line: rgba(31, 56, 46, 0.13);
+  --line-strong: rgba(31, 56, 46, 0.26);
 
   /* 阴影 */
-  --shadow-sm: 0 4rpx 14rpx rgba(20, 53, 42, 0.06);
-  --shadow-md: 0 8rpx 28rpx rgba(20, 53, 42, 0.10);
+  --shadow-sm: 0 4rpx 16rpx rgba(20, 36, 31, 0.06);
+  --shadow-md: 0 10rpx 30rpx rgba(20, 36, 31, 0.10);
 
   background-color: var(--bg);
   font-size: 28rpx;
@@ -48,10 +53,10 @@ page {
   box-sizing: border-box;
 }
 
-/* 卡片组件 */
+/* 卡片 */
 .card {
   background-color: var(--card);
-  border-radius: 20rpx;
+  border-radius: 16rpx;
   padding: 32rpx;
   margin-bottom: 24rpx;
   box-shadow: var(--shadow-sm);
@@ -59,30 +64,29 @@ page {
 
 /* 主按钮 */
 .btn-primary {
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  background: var(--brand);
   color: #fff;
-  border-radius: 44rpx;
+  border-radius: 12rpx;
   padding: 24rpx;
   text-align: center;
-  font-size: 32rpx;
-  font-weight: 600;
-  box-shadow: 0 6rpx 20rpx rgba(26, 71, 53, 0.22);
+  font-size: 30rpx;
+  letter-spacing: 4rpx;
+  box-shadow: 0 6rpx 20rpx rgba(20, 36, 31, 0.18);
 }
 
 .btn-primary:active {
-  opacity: 0.85;
+  background: var(--brand-dark);
 }
 
-/* 金线描边按钮 / 次按钮 */
+/* 描边次按钮 */
 .btn-gold {
   background: transparent;
   color: var(--brand);
-  border: 2rpx solid var(--gold);
-  border-radius: 44rpx;
+  border: 2rpx solid var(--line-strong);
+  border-radius: 12rpx;
   padding: 22rpx;
   text-align: center;
-  font-size: 32rpx;
-  font-weight: 500;
+  font-size: 30rpx;
 }
 
 /* 文本层级 */
@@ -105,3 +109,44 @@ page {
 .mb-20 { margin-bottom: 20rpx; }
 .mb-30 { margin-bottom: 30rpx; }
 .mt-20 { margin-top: 20rpx; }
+
+/* ═══════════ 页内返回键（tab 页 → 首页） ═══════════ */
+
+.head-back {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: #FFFDF7;
+  border: 1rpx solid var(--line);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.head-back:active {
+  opacity: 0.65;
+}
+
+/* 左向箭头：border 折角 */
+.hb-arrow {
+  width: 15rpx;
+  height: 15rpx;
+  border-left: 4rpx solid var(--brand);
+  border-bottom: 4rpx solid var(--brand);
+  transform: rotate(45deg);
+  margin-left: 6rpx;
+}
+
+/* 深底色页头内的返回键（展馆） */
+.head-back-on-dark {
+  background: rgba(246, 240, 226, 0.12);
+  border-color: rgba(246, 240, 226, 0.38);
+  box-shadow: none;
+}
+
+.head-back-on-dark .hb-arrow {
+  border-left-color: #F6F0E2;
+  border-bottom-color: #F6F0E2;
+}

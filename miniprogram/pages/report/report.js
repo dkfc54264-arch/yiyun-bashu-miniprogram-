@@ -154,15 +154,11 @@ Page({
   /* ═══════════════════════ 概览操作 ═══════════════════════ */
 
   goToTask() {
-    wx.navigateTo({
-      url: '/pages/task/task'
-    });
+    wx.switchTab({ url: '/pages/study/study' });
   },
 
   goToDigital() {
-    wx.navigateTo({
-      url: '/pages/ar/ar'
-    });
+    wx.switchTab({ url: '/pages/ar/ar' });
   },
 
   /* ═══════════════════════ 写作表单 ═══════════════════════ */

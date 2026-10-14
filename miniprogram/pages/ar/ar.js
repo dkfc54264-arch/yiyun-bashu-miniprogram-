@@ -12,10 +12,11 @@ Page({
         id: 'baxiaoyi',
         name: '巴小艺',
         glyph: '巴',
+        image: '/images/baxiaoyi.jpg',
         role: '非遗数字人讲解员',
         slogan: '让非遗开口说话',
-        color: '#1A4735',
-        gradient: 'linear-gradient(135deg, #1A4735 0%, #14352A 100%)',
+        color: '#1F3830',
+        gradient: 'linear-gradient(135deg, #1F3830 0%, #14241F 100%)',
         desc: '艺韵巴蜀的AI数字人讲解员，扎根酉阳非遗知识库，24小时在线为你讲解西兰卡普、傩戏、苗银、摆手舞与土家美食背后的故事。'
       },
       {
@@ -58,25 +59,25 @@ Page({
         id: 'papercut',
         name: '非遗剪纸',
         category: '传统美术',
-        description: '剪纸是中国传统民间艺术之一，通过剪刀或刻刀在纸上剪刻出各种图案，常用于节日装饰和民俗活动。基地以剪纸为载体，让游客在立体展示中感受传统纹样之美。',
-        history: '剪纸艺术起源于汉代，至今已有两千多年的历史。它以其独特的艺术形式和深厚的文化内涵，成为中华民族文化遗产的重要组成部分。',
-        technique: '剪纸技法包括阳刻、阴刻、阴阳刻结合等多种方式，讲究线条流畅、构图精美。'
+        description: '剪纸是中国最古老的民间艺术之一，一把剪刀、一张红纸，便能剪出山河花鸟与世间祝愿。基地以立体展示让传统纹样在指尖转动，感受一刀一剪里的民俗之美。',
+        history: '剪纸起源于汉代，与造纸术相伴而生，至今已逾两千年。在武陵山区，土家、苗家百姓逢年过节、婚丧嫁娶都要剪纸贴花，红纸纹样里藏着代代相传的生活祈愿。',
+        technique: '剪纸分阳刻、阴刻与阴阳刻结合：阳刻线线相连，玲珑剔透；阴刻线线相断，厚重古朴。讲究线条如银丝，构图求对称饱满。'
       },
       {
-        id: 'paper',
-        name: '古法造纸',
-        category: '传统技艺',
-        description: '古法造纸是中国古代四大发明之一，采用天然植物纤维为原料，经过多道工序手工制作。',
-        history: '造纸术发明于东汉时期，由蔡伦改进。古法造纸工艺复杂，需经过浸泡、蒸煮、打浆、抄纸、晾晒等数十道工序。',
-        technique: '传统造纸主要使用竹、麻、树皮等原料，采用石灰水浸泡、日光漂白等天然方法处理。'
+        id: 'windowflower',
+        name: '窗花灯影',
+        category: '岁时民俗',
+        description: '窗花是贴在窗棂上的剪纸，逢春节换新，红梅、喜鹊、门神、瑞兽跃然纸上，光影透过红纸洒进屋内，是年味最浓的一抹颜色。',
+        history: '贴窗花的习俗盛行于唐宋，延续至今。土家山寨的除夕，家家户户剪窗花、糊新窗，以红纸压胜避邪，迎接新春进门。',
+        technique: '窗花多用阳刻，线条细密而不杂乱，需适应窗格的方圆形状构图，讲究"图中有意，意中吉祥"。'
       },
       {
-        id: 'shadow',
-        name: '皮影戏',
-        category: '传统戏剧',
-        description: '皮影戏是一种以兽皮或纸板做成的人物剪影表演故事的民间戏剧形式。',
-        history: '皮影戏起源于西汉，兴盛于唐代，至今仍在许多地区流传，是世界非物质文化遗产之一。',
-        technique: '皮影制作需要经过选皮、制皮、画稿、雕刻、着色等工序，表演时通过灯光投影在幕布上。'
+        id: 'happinessflower',
+        name: '喜花团花',
+        category: '婚俗礼俗',
+        description: '喜花是婚嫁喜庆时的专用剪纸，双喜扣合、鸳鸯并蒂、蝶戏牡丹，多剪成圆形团花，寓意花好月圆、圆满和美。',
+        history: '团花是剪纸中最古老的形制，出土的唐代皮革团花已见对称纹样雏形。土苗婚俗中，喜花贴于嫁妆、喜堂与洞房，是仪式中不可缺少的祝福。',
+        technique: '团花采用折叠对称剪法：红纸数折，一剪展开即成辐射对称图案，最见手艺人的构图功夫。'
       }
     ],
 
@@ -91,6 +92,9 @@ Page({
   },
 
   onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 2 });
+    }
     if (!this.data.autoRotateTimer) {
       this.startAutoRotate();
     }
@@ -109,7 +113,11 @@ Page({
     const tab = e.currentTarget.dataset.tab;
     if (tab === this.data.activeTab) return;
     this.setData({ activeTab: tab });
-    wx.vibrateShort({ type: 'light' });
+  },
+
+  // 左上角返回键：回首页
+  goHome() {
+    wx.switchTab({ url: '/pages/index/index' });
   },
 
   // ─── IP 人设切换 ───
@@ -262,6 +270,6 @@ Page({
   },
 
   onShareAppMessage() {
-    return { title: '艺韵巴蜀数字展示｜IP人设·剪纸3D·非遗科普', path: '/pages/ar/ar' };
+    return { title: '艺韵巴蜀数字展示｜IP人设·剪纸3D·非遗科普', path: '/pages/index/index' };
   }
 });

@@ -1,0 +1,191 @@
+<!-- pages/study/study.wxml —— 研学聚合：关卡任务 / 电子剧本 -->
+<view class="study-page">
+
+  <!-- 页头：左上角返回键（回首页） -->
+  <view class="study-head">
+    <view class="head-back" bindtap="goHome">
+      <view class="hb-arrow"></view>
+    </view>
+    <view class="head-titles">
+      <view class="study-title">研学</view>
+    </view>
+  </view>
+
+  <!-- 双段切换 -->
+  <view class="study-seg">
+    <view class="seg-item {{studyTab === 'task' ? 'active' : ''}}" bindtap="switchStudyTab" data-tab="task">关卡任务</view>
+    <view class="seg-item {{studyTab === 'script' ? 'active' : ''}}" bindtap="switchStudyTab" data-tab="script">电子剧本</view>
+  </view>
+
+  <!-- ═══════════════ 关卡任务 ═══════════════ -->
+  <block wx:if="{{studyTab === 'task'}}">
+    <view class="page-sub">阅读知识卡，答对 2 题即过关，赢取守护积分</view>
+
+    <view class="progress-area">
+      <view class="progress-head">
+        <text class="progress-text">守护进度：{{doneCount}}/{{totalTask}} 关</text>
+        <text class="progress-num">{{totalProgress}}%</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-active" style="width: {{totalProgress + '%'}}"></view>
+      </view>
+    </view>
+
+    <view class="task-list">
+      <view
+        class="task-item {{item.status === 1 ? 'done' : ''}}"
+        wx:for="{{taskList}}"
+        wx:key="gateId"
+        bindtap="openGate"
+        data-id="{{item.gateId}}"
+      >
+        <view class="task-glyph" style="background: {{item.color}}18; color: {{item.color}};">{{item.glyph}}</view>
+        <view class="task-info">
+          <view class="task-name">{{item.name}}<text class="task-cat">{{item.category}}</text></view>
+          <view class="task-desc">{{item.desc}}</view>
+          <view class="task-meta">
+            <text class="task-reward">+{{item.reward}} 积分</text>
+            <text class="task-clue" wx:if="{{item.clueUnlocked}}">· 线索已解锁</text>
+          </view>
+        </view>
+        <view class="task-status">
+          <text class="{{item.status === 1 ? 'status-done' : 'status-undone'}}">
+            {{item.status === 1 ? '已完成' : '去闯关'}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══════════════ 电子剧本 ═══════════════ -->
+  <block wx:else>
+    <view class="sc-page-subtitle">《酉阳秘境·非遗守护人》</view>
+
+    <view class="sc-version-tabs">
+      <view
+        class="sc-version-tab {{currentVersion === item.id ? 'active' : ''}}"
+        wx:for="{{versions}}"
+        wx:key="id"
+        bindtap="switchVersion"
+        data-id="{{item.id}}"
+      >
+        <view class="sc-vt-name">{{item.name}}</view>
+        <view class="sc-vt-diff">{{item.difficultyText}}</view>
+      </view>
+    </view>
+
+    <view class="sc-info" wx:if="{{script}}">
+      <text>{{script.duration}}</text>
+      <text class="sc-info-sep">｜</text>
+      <text>{{script.audience}}</text>
+      <text class="sc-info-sep">｜</text>
+      <text class="sc-info-price">￥{{script.price}}/人</text>
+    </view>
+
+    <view class="sc-progress-bar">
+      <view class="sc-progress-text">第 {{currentChapter + 1}} 章 / 共 {{chapters.length}} 章</view>
+      <view class="sc-progress-line">
+        <view class="sc-progress-active" style="width: {{(currentChapter + 1) / chapters.length * 100 + '%'}}"></view>
+      </view>
+    </view>
+
+    <view class="sc-chapter-card" wx:if="{{chapters.length > 0}}">
+      <view class="sc-chapter-title">{{chapters[currentChapter].title}}</view>
+      <view class="sc-chapter-content">{{chapters[currentChapter].content}}</view>
+    </view>
+
+    <view class="sc-btn-group">
+      <button class="sc-ctrl-btn sc-prev-btn" bindtap="prevChapter" disabled="{{currentChapter === 0}}">上一章</button>
+      <button class="sc-ctrl-btn sc-next-btn" bindtap="nextChapter" disabled="{{currentChapter === chapters.length - 1}}">下一章</button>
+    </view>
+
+    <view class="sc-clue-card">
+      <view class="sc-clue-head" bindtap="toggleClues">
+        <view class="sc-clue-title">文化线索收集</view>
+        <view class="sc-clue-count">{{cluesDone}}/5 已解锁</view>
+        <view class="sc-clue-arrow {{showClues ? 'up' : ''}}">›</view>
+      </view>
+      <view class="sc-clue-sub" bindtap="goTaskFromScript">前往关卡任务完成挑战，解锁对应线索</view>
+      <view class="sc-clue-list" wx:if="{{showClues}}">
+        <view class="sc-clue-item {{item.unlocked ? 'unlocked' : ''}}" wx:for="{{clues}}" wx:key="gateId">
+          <view class="sc-clue-item-head">
+            <text class="sc-clue-name">{{index + 1}}. {{item.name}}</text>
+            <text class="sc-clue-status">{{item.unlocked ? '已解锁' : '未解锁'}}</text>
+          </view>
+          <view class="sc-clue-text" wx:if="{{item.unlocked}}">{{item.clue}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ═══ 关卡详情弹层（任务侧） ═══ -->
+  <view class="gate-mask" wx:if="{{showGate}}" catchtouchmove="noop">
+    <view class="gate-modal">
+      <view class="gate-close" bindtap="closeGate">✕</view>
+
+      <view class="gate-head" wx:if="{{gate}}">
+        <view class="gate-glyph" style="background: {{gate.color}}18; color: {{gate.color}};">{{gate.glyph}}</view>
+        <view class="gate-title-wrap">
+          <view class="gate-name">{{gate.name}}</view>
+          <view class="gate-cat">{{gate.category}}</view>
+        </view>
+      </view>
+
+      <!-- 知识阅读 -->
+      <block wx:if="{{gate && gateStep === 'read'}}">
+        <view class="step-tag">第一步 · 知识阅读</view>
+        <scroll-view scroll-y class="knowledge-scroll">
+          <view class="knowledge-text">{{gate.knowledge}}</view>
+        </scroll-view>
+        <view class="gate-btn" bindtap="startQuiz">我读完了，开始答题</view>
+      </block>
+
+      <!-- 答题 -->
+      <block wx:if="{{gate && gateStep === 'quiz'}}">
+        <view class="step-tag">第二步 · 答对 2 题过关</view>
+        <scroll-view scroll-y class="knowledge-scroll">
+          <view class="quiz-item" wx:for="{{gate.quiz}}" wx:for-item="q" wx:for-index="qindex" wx:key="qindex">
+            <view class="quiz-q">{{qindex + 1}}. {{q.q}}</view>
+            <view
+              class="quiz-option {{quizAnswers[qindex] === oindex ? 'selected' : ''}}"
+              wx:for="{{q.options}}"
+              wx:for-item="opt"
+              wx:for-index="oindex"
+              wx:key="oindex"
+              bindtap="selectOption"
+              data-qindex="{{qindex}}"
+              data-oindex="{{oindex}}"
+            >
+              {{opt}}
+            </view>
+          </view>
+        </scroll-view>
+        <view class="gate-btn-group">
+          <view class="gate-btn ghost" bindtap="backToRead">返回阅读</view>
+          <view class="gate-btn" bindtap="submitQuiz">提交答案</view>
+        </view>
+      </block>
+
+      <!-- 结果 -->
+      <block wx:if="{{gate && gateStep === 'result'}}">
+        <view class="step-tag">{{quizResult && quizResult.passed ? '过关成功' : '再来一次'}}</view>
+        <scroll-view scroll-y class="knowledge-scroll">
+          <view class="result-box {{quizResult && quizResult.passed ? 'pass' : 'fail'}}" wx:if="{{quizResult}}">
+            <view class="result-emoji">{{quizResult.passed ? '🎉' : '💪'}}</view>
+            <view class="result-title" wx:if="{{quizResult.passed}}">{{gate.name}} · 过关！</view>
+            <view class="result-reward" wx:if="{{quizResult.passed && !quizResult.alreadyDone}}">+{{quizResult.reward}} 积分 · 文化线索已解锁</view>
+            <view class="result-msg">{{quizResult.msg}}</view>
+            <view class="clue-box" wx:if="{{quizResult.passed}}">
+              <view class="clue-box-title">🗝 本关文化线索</view>
+              <view class="clue-box-text">{{gate.clue}}</view>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="gate-btn-group">
+          <view class="gate-btn ghost" wx:if="{{quizResult && !quizResult.passed}}" bindtap="backToRead">重新答题</view>
+          <view class="gate-btn" bindtap="closeGate">{{quizResult && quizResult.passed ? '完成' : '关闭'}}</view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

@@ -1,7 +1,6 @@
 <view class="container">
   <view class="header">
     <view class="title">AI研学助手</view>
-    <view class="subtitle">智能问答 · 非遗知识</view>
   </view>
 
   <view class="quick-questions">

@@ -1,0 +1,43 @@
+<!-- 底部主导航：CSS 线性图标，黛色未选 / 朱砂选中 -->
+<!-- safeBottom 取到值时内联注入；为 0 时不写内联样式，交给 CSS env() 兜底 -->
+<view class="tab-bar" style="{{safeBottom ? 'padding-bottom:' + safeBottom + 'px;' : ''}}">
+  <view
+    wx:for="{{list}}"
+    wx:key="pagePath"
+    class="tab-item {{selected === index ? 'active' : ''}}"
+    data-path="{{item.pagePath}}"
+    data-index="{{index}}"
+    bindtap="switchTab"
+  >
+    <!-- 选中标记：朱砂短线（版心印） -->
+    <view class="tab-mark"></view>
+
+    <!-- 图标一：山舍（首页） -->
+    <view class="tab-ico" wx:if="{{item.id === 'home'}}">
+      <view class="ico-roof"></view>
+      <view class="ico-house"></view>
+    </view>
+
+    <!-- 图标二：卷轴（研学） -->
+    <view class="tab-ico" wx:elif="{{item.id === 'study'}}">
+      <view class="ico-rod"></view>
+      <view class="ico-scroll"></view>
+    </view>
+
+    <!-- 图标三：画框（展馆） -->
+    <view class="tab-ico" wx:elif="{{item.id === 'gallery'}}">
+      <view class="ico-frame">
+        <view class="ico-sun"></view>
+        <view class="ico-line"></view>
+      </view>
+    </view>
+
+    <!-- 图标四：人（我的） -->
+    <view class="tab-ico" wx:else>
+      <view class="ico-head"></view>
+      <view class="ico-shoulder"></view>
+    </view>
+
+    <view class="tab-label">{{item.text}}</view>
+  </view>
+</view>

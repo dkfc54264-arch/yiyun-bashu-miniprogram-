@@ -24,6 +24,9 @@ Page({
   },
 
   onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 3 });
+    }
     this.refreshUser();
     this.loadOrders();
   },
@@ -64,11 +67,9 @@ Page({
 
   /* ─── 页面跳转 ─── */
   goBooking() { wx.navigateTo({ url: '/pages/booking/booking' }); },
-  goTask() { wx.navigateTo({ url: '/pages/task/task' }); },
-  goShop() { wx.navigateTo({ url: '/pages/shop/shop' }); },
+  goTask() { wx.switchTab({ url: '/pages/study/study' }); },
   goRank() { wx.navigateTo({ url: '/pages/ranking/ranking' }); },
   goReport() { wx.navigateTo({ url: '/pages/report/report' }); },
-  goAr() { wx.navigateTo({ url: '/pages/ar/ar' }); },
 
   /* ═══════════ 守护人证书（canvas 2d） ═══════════ */
 
@@ -99,18 +100,18 @@ Page({
       ctx.scale(dpr, dpr);
 
       // 宣纸底 + 双层描边
-      ctx.fillStyle = '#F5F0E3';
+      ctx.fillStyle = '#F6F0E2';
       ctx.fillRect(0, 0, W, H);
       ctx.strokeStyle = '#C9A227';
       ctx.lineWidth = 3;
       ctx.strokeRect(10, 10, W - 20, H - 20);
-      ctx.strokeStyle = 'rgba(26, 71, 53, 0.7)';
+      ctx.strokeStyle = 'rgba(31, 56, 48, 0.7)';
       ctx.lineWidth = 1;
       ctx.strokeRect(18, 18, W - 36, H - 36);
 
       ctx.textAlign = 'center';
       // 标题
-      ctx.fillStyle = '#1A4735';
+      ctx.fillStyle = '#1F3830';
       ctx.font = 'bold 22px sans-serif';
       ctx.fillText('酉阳非遗守护人证书', W / 2, 64);
       ctx.font = '9px sans-serif';
@@ -135,7 +136,7 @@ Page({
       ctx.fillText('已完成《酉阳秘境·非遗守护人》剧本研学', W / 2, 206);
       ctx.fillText('解锁五大非遗关卡 · 守护酉阳非遗秘境', W / 2, 228);
       // 等级积分
-      ctx.fillStyle = '#1A4735';
+      ctx.fillStyle = '#1F3830';
       ctx.font = 'bold 15px sans-serif';
       ctx.fillText(`${cur.name} · ${u.score || 0} 积分`, W / 2, 264);
       // 落款

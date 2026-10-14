@@ -4,7 +4,7 @@
 
 .container {
   min-height: 100vh;
-  background: #F5F0E3;
+  background: #F6F0E2;
   padding-bottom: 80rpx;
 }
 
@@ -14,12 +14,12 @@
   height: 96rpx;
   line-height: 96rpx;
   text-align: center;
-  background: linear-gradient(135deg, #1A4735, #14352A);
+  background: linear-gradient(135deg, #1F3830, #14241F);
   color: #fff;
   border-radius: 48rpx;
   font-size: 32rpx;
   font-weight: 600;
-  box-shadow: 0 6rpx 20rpx rgba(26, 71, 53, 0.25);
+  box-shadow: 0 6rpx 20rpx rgba(31, 56, 48, 0.25);
 }
 
 .btn-secondary {
@@ -47,7 +47,7 @@
 
 .page-header {
   padding: 40rpx 32rpx 24rpx;
-  background: linear-gradient(135deg, #1A4735 0%, #14352A 100%);
+  background: linear-gradient(135deg, #1F3830 0%, #14241F 100%);
   text-align: center;
 }
 
@@ -102,9 +102,9 @@
   height: 150rpx;
   border-radius: 50%;
   border: 10rpx solid #e8e8e8;
-  border-top-color: #1A4735;
-  border-right-color: #1A4735;
-  border-bottom-color: #1A4735;
+  border-top-color: #1F3830;
+  border-right-color: #1F3830;
+  border-bottom-color: #1F3830;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +126,7 @@
 .ring-percent {
   font-size: 36rpx;
   font-weight: 800;
-  color: #1A4735;
+  color: #1F3830;
 }
 
 .ring-label {
@@ -186,7 +186,7 @@
 }
 
 .level-text {
-  color: #1A4735;
+  color: #1F3830;
   font-weight: 600;
 }
 
@@ -330,7 +330,7 @@
 
 .write-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #1A4735, #2A5E46);
+  background: linear-gradient(90deg, #1F3830, #3A5A4E);
   border-radius: 5rpx;
   transition: width 0.3s ease;
 }
@@ -355,15 +355,15 @@
 }
 
 .section-tab.active {
-  border-color: #1A4735;
-  color: #1A4735;
+  border-color: #1F3830;
+  color: #1F3830;
   background: rgba(44,94,48,0.04);
   font-weight: 600;
 }
 
 .section-tab.filled {
   background: rgba(76,175,80,0.06);
-  color: #2A5E46;
+  color: #3A5A4E;
 }
 
 .section-tab.filled::after {
@@ -403,8 +403,8 @@
 
 .editor-hint {
   font-size: 24rpx;
-  color: #1A4735;
-  background: rgba(26,71,53,0.06);
+  color: #1F3830;
+  background: rgba(31, 56, 48,0.06);
   padding: 12rpx 16rpx;
   border-radius: 10rpx;
   margin-bottom: 16rpx;
@@ -446,7 +446,7 @@
   background: #fff;
   border-radius: 24rpx;
   font-size: 26rpx;
-  color: #1A4735;
+  color: #1F3830;
   border: 2rpx solid rgba(44,94,48,0.2);
 }
 
@@ -531,7 +531,7 @@
 .paper-section-title {
   font-size: 30rpx;
   font-weight: 700;
-  color: #1A4735;
+  color: #1F3830;
   display: block;
   margin-bottom: 14rpx;
   padding-bottom: 8rpx;

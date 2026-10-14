@@ -2,7 +2,6 @@
   <!-- Header -->
   <view class="header">
     <view class="title">文创商城</view>
-    <view class="subtitle">积分兑换 · 酉阳非遗好物</view>
   </view>
 
   <!-- 我的积分条 -->

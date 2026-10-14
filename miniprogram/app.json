@@ -1,21 +1,32 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/study/study",
+    "pages/ar/ar",
+    "pages/profile/profile",
     "pages/booking/booking",
-    "pages/task/task",
     "pages/ai/ai",
     "pages/ranking/ranking",
     "pages/report/report",
-    "pages/ar/ar",
-    "pages/script/script",
-    "pages/shop/shop",
-    "pages/profile/profile"
+    "pages/shop/shop"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#1A4735",
-    "navigationBarTitleText": "非遗剧本研学",
+    "navigationBarBackgroundColor": "#1F3830",
+    "navigationBarTitleText": "艺韵巴蜀",
     "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#96978C",
+    "selectedColor": "#A63A2E",
+    "backgroundColor": "#FFFDF7",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/study/study", "text": "研学" },
+      { "pagePath": "pages/ar/ar", "text": "展馆" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

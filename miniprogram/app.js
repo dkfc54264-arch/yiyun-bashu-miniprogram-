@@ -4,7 +4,9 @@ App({
     this.globalData = {
       // env 参数决定小程序发起的云开发调用（wx.cloud.xxx）请求到哪个云环境
       env: "cloud1-d9gh6b85b2c0f6570",
-      userInfo: null
+      userInfo: null,
+      // 首页清单跳研学 tab 时预选段落：'task' | 'script'
+      studySegment: ''
     };
     if (!wx.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");

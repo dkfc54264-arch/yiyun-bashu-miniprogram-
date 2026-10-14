@@ -32,7 +32,7 @@ Page({
     orders: []
   },
 
-  onLoad() {
+  onLoad(options) {
     const versions = Object.keys(SCRIPTS).map(id => ({
       id,
       name: SCRIPTS[id].name,
@@ -41,6 +41,10 @@ Page({
       difficultyText: SCRIPTS[id].difficultyText
     }));
     this.setData({ versions });
+    // 首页"研学三境"卡片可带版本预选
+    if (options && options.version && SCRIPTS[options.version]) {
+      this.selectVersion({ currentTarget: { dataset: { id: options.version } } });
+    }
   },
 
   onShow() {

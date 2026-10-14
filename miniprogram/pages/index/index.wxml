@@ -1,83 +1,103 @@
-<!-- 首页：主形象图 + 核心产品 + 功能入口 -->
+<!-- 首页：黛山朱砂新中式 · 竖排品牌区 / 用户进度 / 2+3 汇总导航 -->
 <view class="page">
 
-  <!-- ═══════════ 主形象 Hero 区 ═══════════ -->
-  <view class="hero" style="padding-top: {{statusBarHeight}}px;">
-    <!-- 墨绿渐变底 -->
-    <view class="hero-fallback"></view>
+  <!-- ═══════════ 品牌主区（深黛 · 竖排） ═══════════ -->
+  <view class="brand">
+    <!-- 淡墨山水肌理：远近两层山脊 -->
+    <view class="mountains">
+      <view class="m-far"></view>
+      <view class="m-near"></view>
+    </view>
 
-    <!-- 主形象背后光晕 -->
-    <view class="hero-glow"></view>
+    <view class="b-top">
+      <view class="b-title">艺韵巴蜀</view>
+      <view class="b-sub-v">沉浸式数字研学基地</view>
+      <view class="b-right">
+        <view class="b-seal">守</view>
+        <view class="b-place-v">重庆酉阳龚滩古镇一一八号台</view>
+      </view>
+    </view>
+    <view class="b-slogan-row">
+      <view class="b-line"></view>
+      <view class="b-slogan">在故事里 · 读懂非遗</view>
+      <view class="b-mini-seal">韵</view>
+    </view>
+  </view>
 
-    <!-- 顶部用户问候 -->
-    <view class="hero-top">
-      <view class="hero-user">
-        <view class="hero-avatar">{{userInfo.avatar}}</view>
-        <view class="hero-user-text">
-          <view class="hero-hello">{{userInfo.greeting}}</view>
-          <view class="hero-sub">{{userInfo.level}} · {{userInfo.score}} 积分</view>
+  <!-- ═══════════ 用户问候条 ═══════════ -->
+  <view class="user-strip">
+    <view class="us-left">
+      <view class="us-hello">{{greeting}}，{{nickname}}</view>
+      <view class="us-level">{{level}}</view>
+    </view>
+    <view class="us-score">{{score}} 积分 · 第 {{rank}} 名</view>
+  </view>
+  <view class="progress-line-wrap">
+    <view class="pl-track"><view class="pl-fill" style="width: {{progress}}%;"></view></view>
+    <view class="pl-label">研学进度 {{done}}/5 关 · {{progress}}%</view>
+  </view>
+
+  <!-- ═══════════ 汇总导航（第一行两个 + 第二行三个） ═══════════ -->
+  <view class="section">
+    <view class="sec-head">
+      <view class="sec-title">功能导航</view>
+      <view class="sec-en">ALL MODULES</view>
+    </view>
+
+    <!-- 第一行：两个大卡 -->
+    <view class="nav-grid nav-grid-2">
+
+      <!-- 预约购票（直达） -->
+      <view class="nav-card nav-card-lg" bindtap="goBooking" hover-class="nc-hover" hover-stay-time="60">
+        <view class="nc-ic ic-ticket"></view>
+        <view class="nc-main">
+          <view class="nc-name">预约购票</view>
+          <view class="nc-desc">三版本可选</view>
+          <view class="nc-desc">￥129 起 · 择场次入营</view>
         </view>
       </view>
-      <view class="hero-rank" bindtap="goToRank">🏅 {{userInfo.rank}}</view>
-    </view>
 
-    <!-- 主形象：任务 Q 版角色 -->
-    <view class="hero-figure">
-      <image
-        wx:if="{{!mascotFail}}"
-        class="hero-mascot"
-        src="{{mascot}}"
-        mode="heightFix"
-        binderror="onMascotError"
-      />
-    </view>
-
-    <!-- 主标题 -->
-    <view class="hero-body">
-      <view class="hero-brand">非遗剧本研学</view>
-      <view class="hero-slogan">在故事里，读懂非遗</view>
-      <view class="hero-cta" bindtap="goToScript">开启研学之旅</view>
-    </view>
-  </view>
-
-  <!-- ═══════════ 核心产品区 ═══════════ -->
-  <view class="intro-card">
-    <view class="intro-tag">核心体验</view>
-    <view class="intro-title">沉浸式非遗研学</view>
-    <view class="intro-desc">电子剧本 · 数字观展 · AI 伴学 · 报告沉淀，一条完整研学链路带你从「旁观」走向「亲历」。</view>
-  </view>
-
-  <!-- ═══════════ 功能入口网格 ═══════════ -->
-  <view class="section-head">
-    <view class="section-title">探索功能</view>
-    <view class="section-line"></view>
-  </view>
-  <view class="feature-grid">
-    <view
-      class="feature-item"
-      wx:for="{{features}}"
-      wx:key="id"
-      bindtap="goFeature"
-      data-url="{{item.url}}"
-    >
-      <view class="feature-seal">{{item.glyph}}</view>
-      <view class="feature-title">{{item.title}}</view>
-      <view class="feature-desc">{{item.desc}}</view>
-    </view>
-  </view>
-
-  <!-- ═══════════ 研学进度卡 ═══════════ -->
-  <view class="progress-card" bindtap="goToTask">
-    <view class="progress-info">
-      <view class="progress-title">我的研学进度</view>
-      <view class="progress-sub">已完成 {{progress.done}}/{{progress.totalTask}} 项任务</view>
-      <view class="progress-track">
-        <view class="progress-fill" style="width: {{progress.total}}%;"></view>
+      <!-- 研学任务（关卡任务 + 电子剧本） -->
+      <view class="nav-card nav-card-lg nc-stack">
+        <view class="nc-top" bindtap="goStudyTask" data-seg="task">
+          <view class="nc-ic ic-scroll"></view>
+          <view class="nc-main">
+            <view class="nc-name">研学任务</view>
+            <view class="nc-desc">阅读闯关 · 沉浸剧本</view>
+          </view>
+        </view>
+        <view class="nc-chips">
+          <view class="nc-chip" catchtap="goStudyTask" data-seg="task">关卡任务</view>
+          <view class="nc-chip" catchtap="goStudyTask" data-seg="script">电子剧本</view>
+        </view>
       </view>
     </view>
-    <view class="progress-percent">{{progress.total}}%</view>
-    <view class="progress-arrow">›</view>
+
+    <!-- 第二行：三个卡 -->
+    <view class="nav-grid nav-grid-3">
+
+      <!-- 数字展馆（直达） -->
+      <view class="nav-card nav-card-sm" bindtap="goGallery" hover-class="nc-hover" hover-stay-time="60">
+        <view class="nc-ic-sm ic-frame"></view>
+        <view class="nc-name-sm">数字展馆</view>
+        <view class="nc-sub">3D · 科普视频</view>
+      </view>
+
+      <!-- AI 巴小艺（直达） -->
+      <view class="nav-card nav-card-sm" bindtap="goAI" hover-class="nc-hover" hover-stay-time="60">
+        <view class="nc-ic-sm ic-ai"></view>
+        <view class="nc-name-sm">AI 巴小艺</view>
+        <view class="nc-sub">非遗智能问答</view>
+      </view>
+
+      <!-- 文创商城（直达） -->
+      <view class="nav-card nav-card-sm" bindtap="goShop" hover-class="nc-hover" hover-stay-time="60">
+        <view class="nc-ic-sm ic-shop"></view>
+        <view class="nc-name-sm">文创商城</view>
+        <view class="nc-sub">非遗好物 · 积分兑换</view>
+      </view>
+    </view>
   </view>
 
-  <view class="page-footer">非遗剧本研学 · 让传统在体验中延续</view>
+  <view class="page-footer">艺韵巴蜀 · 让传统在体验中延续</view>
 </view>

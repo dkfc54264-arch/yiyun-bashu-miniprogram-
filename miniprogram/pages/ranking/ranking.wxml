@@ -16,7 +16,7 @@
         <text class="my-rank-number">{{myInfo.rank}}</text>
         <text class="my-rank-suffix">/{{rankList.length}}</text>
       </view>
-      <view class="my-avatar" style="background: {{myInfo.avatarBg || '#1A4735'}}">
+      <view class="my-avatar" style="background: {{myInfo.avatarBg || '#1F3830'}}">
         <text class="my-avatar-text">{{myInfo.avatar}}</text>
       </view>
       <view class="my-info">

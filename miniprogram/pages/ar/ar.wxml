@@ -1,8 +1,10 @@
 <view class="container">
-  <!-- Header -->
+  <!-- Header：左上角返回键（回首页） -->
   <view class="header">
+    <view class="head-back head-back-on-dark head-back-pos" bindtap="goHome">
+      <view class="hb-arrow"></view>
+    </view>
     <view class="title">数字展示</view>
-    <view class="subtitle">IP 人设 · 剪纸 3D · 非遗科普视频</view>
   </view>
 
   <!-- ═══ 三段切换 ═══ -->
@@ -40,7 +42,21 @@
           >
             <!-- 正面：人设形象 -->
             <view class="model-face front">
-              <view class="ip-card" style="background: {{ipCharacters[currentIp].gradient}};">
+              <!-- 有真实形象图：3D 展示卡（图随卡片旋转） -->
+              <view class="ip-photo" wx:if="{{ipCharacters[currentIp].image}}">
+                <image
+                  class="ip-photo-img"
+                  src="{{ipCharacters[currentIp].image}}"
+                  mode="aspectFit"
+                  lazy-load="{{true}}"
+                ></image>
+                <view class="ip-photo-plate">
+                  <view class="ipp-name">{{ipCharacters[currentIp].name}}</view>
+                  <view class="ipp-role">{{ipCharacters[currentIp].role}}</view>
+                </view>
+              </view>
+              <!-- 无图人设：字卡 -->
+              <view class="ip-card" wx:else style="background: {{ipCharacters[currentIp].gradient}};">
                 <view class="ip-ring"></view>
                 <view class="ip-glyph">{{ipCharacters[currentIp].glyph}}</view>
                 <view class="ip-name">{{ipCharacters[currentIp].name}}</view>

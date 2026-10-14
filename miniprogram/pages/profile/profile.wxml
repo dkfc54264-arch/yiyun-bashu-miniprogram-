@@ -63,11 +63,6 @@
       <text class="menu-text">关卡任务</text>
       <text class="menu-arrow">›</text>
     </view>
-    <view class="menu-item" bindtap="goAr">
-      <text class="menu-icon">🎭</text>
-      <text class="menu-text">数字展示</text>
-      <text class="menu-arrow">›</text>
-    </view>
     <view class="menu-item" bindtap="goRank">
       <text class="menu-icon">🏆</text>
       <text class="menu-text">积分排行</text>
@@ -76,11 +71,6 @@
     <view class="menu-item" bindtap="goReport">
       <text class="menu-icon">📝</text>
       <text class="menu-text">研学报告</text>
-      <text class="menu-arrow">›</text>
-    </view>
-    <view class="menu-item" bindtap="goShop">
-      <text class="menu-icon">🛍️</text>
-      <text class="menu-text">文创商城</text>
       <text class="menu-arrow">›</text>
     </view>
   </view>

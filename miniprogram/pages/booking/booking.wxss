@@ -6,15 +6,6 @@
   box-sizing: border-box;
 }
 
-.page-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: var(--brand);
-  text-align: center;
-  margin: 40rpx 0;
-  letter-spacing: 2rpx;
-}
-
 .form-card {
   background-color: var(--card);
   border-radius: 20rpx;
@@ -67,7 +58,7 @@
 }
 
 .time-option.active {
-  background-color: rgba(26, 71, 53, 0.10);
+  background-color: rgba(31, 56, 48, 0.10);
   color: var(--brand);
   border-color: var(--brand);
   font-weight: 600;
@@ -81,7 +72,7 @@
   height: 100rpx;
   line-height: 100rpx;
   text-align: center;
-  background: linear-gradient(135deg, #1A4735 0%, #14352A 100%);
+  background: linear-gradient(135deg, #1F3830 0%, #14241F 100%);
   color: #fff;
   font-size: 34rpx;
   font-weight: 600;
@@ -110,7 +101,7 @@
 }
 
 .version-card.active {
-  background-color: rgba(26, 71, 53, 0.08);
+  background-color: rgba(31, 56, 48, 0.08);
   border-color: var(--brand);
 }
 
@@ -264,7 +255,7 @@
 }
 
 .ticket-status.s-paid {
-  background: rgba(26, 71, 53, 0.1);
+  background: rgba(31, 56, 48, 0.1);
   color: var(--brand);
 }
 
@@ -325,7 +316,7 @@
 .pay-mask {
   position: fixed;
   inset: 0;
-  background: rgba(20, 53, 42, 0.55);
+  background: rgba(20, 36, 31, 0.55);
   z-index: 999;
   display: flex;
   align-items: center;
